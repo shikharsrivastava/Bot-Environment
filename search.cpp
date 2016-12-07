@@ -12,21 +12,13 @@ MOVE BOARD::search(int depth)
 		for(int i=0;i<moveList.size();i++)
 		{
 			int move=moveList[i].move;
-			makeMove(moveList[i]);	
-			/*printf("At depth %d move number %d\n",depth,i+1);
-			printMoveList(moveList);
-			printf("moving ");
-			printMove(move);
-			printBoard();			
-			getchar();*/
-			
+			makeMove(moveList[i]);				
 			int next=minn(depth-1);
 			if(next > bestScore)
 			{
 				bestScore=next;
 				bestMove=moveList[i];
 			}
-			
 			unmakeMove();
 		}
 	}
@@ -42,27 +34,18 @@ MOVE BOARD::search(int depth)
 		{
 			int move=moveList[i].move;
 			makeMove(moveList[i]);
-			/*printf("At depth %d move number %d\n",depth,i+1);
-			printMoveList(moveList);
-			printf("moving ");
-			printMove(move);
-			printBoard();
-			getchar();*/
 			int next=maxx(depth-1);
-			//printf("Next  = %d\n",next);
 			if(next < bestScore)
 			{
 				bestScore=next;
 				bestMove=moveList[i];
-				/*printf("Best move = ");
-				printMove(bestMove);*/
 			}
 			unmakeMove();
 		}
 	}
 	return bestMove;
 }
-
+// Max subroutine for MinMax functiom
 int BOARD::maxx(int depth)
 {
 	if(depth==0)
@@ -73,21 +56,13 @@ int BOARD::maxx(int depth)
 	{
 		int move=moveList[i].move;
 		makeMove(moveList[i]);
-		/*printf("At depth %d in max move number %d\n",depth,i+1);
-		printMoveList(moveList);
-		printf("moving ");
-		printMove(move);
-		printBoard();
-		getchar();*/
 		bestScore=max(bestScore,minn(depth-1));
 		unmakeMove();
-		//printf("Unmaking \n");
-		//printBoard();
 	}
 	
 	return bestScore;
 }
-
+// Min subroutine for MinMax function
 int BOARD::minn(int depth)
 {
 	if(depth==0)
@@ -99,17 +74,8 @@ int BOARD::minn(int depth)
 	{
 		int move=moveList[i].move;
 		makeMove(move);
-		
-		/*printf("At depth %d in min move number %d\n",depth,i+1);
-		printMoveList(moveList);
-		printf("moving ");
-		printMove(move);
-		printBoard();
-		getchar();*/
 		bestScore=min(bestScore,maxx(depth-1));
 		unmakeMove();
-		//printf("Unmaking \n");
-		//printBoard();
 	}
 	return bestScore;
 }
